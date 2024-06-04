@@ -31,8 +31,11 @@ public class Application {
        // sd.save(event2);
        // sd.save(event3);
         System.out.println("*******************GET BY ID********************");
+        Event eventDB = sd.getById(2);
+        System.out.println(eventDB.getTitolo());
 
 
-
+        System.out.println("*******************DELETE********************");
+        sd.delete(1);
     }
 }

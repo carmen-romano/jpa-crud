@@ -1,6 +1,7 @@
 package carmenromano.dao;
 
 import carmenromano.entities.Event;
+import com.sun.java.accessibility.util.EventID;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
@@ -12,7 +13,6 @@ public class EventDao {
     public EventDao(EntityManager entity_manager) {
         this.entity_manager = entity_manager;
     }
-
     //metodo per salvare i dati nel DB
     public void save(Event event){
     //per poter far funzionare questo metodo abbiamo bisogno di 4 passaggi:
@@ -30,5 +30,22 @@ public class EventDao {
 
         transazione.commit();
         System.out.println("L'elemento" + event.getTitolo() + "è stato correttamente salvato nel database");
+    }
+
+    //metodo per cercare tramite ID nel DB
+    public Event getById (long eventId){
+        Event event = entity_manager.find(Event.class,eventId);
+        return event;
+    };
+
+    public void delete(long eventId){
+        Event eventFound = getById(eventId);
+        EntityTransaction transazione = entity_manager.getTransaction();
+        transazione.begin();
+        entity_manager.remove(eventFound);
+
+        transazione.commit();
+        System.out.println("L'evento " + eventFound.getTitolo() + " è stato eleminato con successo");
+
     }
 }
